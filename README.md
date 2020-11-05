@@ -1,14 +1,25 @@
 # Resco CRM Sync
 
-This document is a brief summary of actual status of Resco CRM Sync.
+This document is a brief summary of actual status of Resco CRM Sync.<br/>
+Todo list (topics to discussion):
+- TFS: Definition of Ready, Definition of Done, User Story, Tasks, connect existing bugs to User story
+- Connect - need to implement oAuth 2.0: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/11691
+- Solve problem with importing default project in special scenario: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/12355 
+- Enable Connect Page on production server
+- What should be tested
+- Develope Automated tests
+- Rename Update Server to Update Client Metadata?
+- Define better examples of webrequests to this document?
+- Plan to the future
+
 
 # Content:
 1. Getting started with Resco CRM Sync
 2. Creating a connection
 3. Updating metadata
 4. Sync Data
-5. Sync of deletions
-6. Logs of Synchronization
+5. Logs
+6. Tests
 
 # 1. Getting started with Resco CRM Sync
 Resco CRM Sync is a tool that allows connecting two organizations. By creating a connection, you can synchronize data and metadata between them.<br/><br/>
@@ -69,17 +80,6 @@ b) through webservice - ConnectRequest<br/>
 *`Important note`: Server metadata changes are migrated to the client, not vice versa.*
 
 # 4. Sync Data
-## Entities selection
-Selecting of entities, which should be synchronized can be done:<br/>
-a) by enabling them in the list of entities in Resco CRM Sync section in Woodford <br/>
-![Screenshot](enableentities.png)<br/>
-b) through webservice in ConnectRequest as Entities parameter <br/>
-## Sync Filter
-There´s possibility to apply `Sync Filter` per entity:<br/>
-a) by clicking Sync Filter button, (Resco CRM Sync section). And setting conditions in the editor. <br/>
-![Screenshot](syncfilter.png)
-b) through webservice in ConnectRequest as SyncFiltersXml parameter <br/>
-
 ## Ways of Sync data execution
 a) `Sync All` - On demand - by clicking Sync All (Resco CRM Sync section, in Woodford)<br/>
 b) `Sync Job` - Periodically - by setting frequency of synchronization on the client.<br/> You can set it up in Admin Console->Processes. If the job (Sync Job) does not exist, you can create it. 
@@ -122,3 +122,41 @@ Use the toolbar buttons to change the status of transactions:<br/>
 `Set to Pending`: Schedule selected transactions for a new delivery.<br/>
 `Set to Archived`: Mark selected transactions as Archived. These changes will not be delivered to Dynamics.<br/>
 `Set all to Pending`: Schedule all failed transactions (with the status Error) for a new delivery.<br/>
+
+## Entities selection
+Selecting of entities, which should be synchronized can be done:<br/>
+a) by enabling them in the list of entities in Resco CRM Sync section in Woodford <br/>
+![Screenshot](enableentities.png)<br/>
+b) through webservice in ConnectRequest as Entities parameter <br/>
+## Sync Filter
+There´s possibility to apply `Sync Filter` per entity:<br/>
+a) by clicking Sync Filter button, (Resco CRM Sync section). And setting conditions in the editor. <br/>
+![Screenshot](syncfilter.png)
+b) through webservice in ConnectRequest as SyncFiltersXml parameter <br/>
+
+## Sync Deletion
+For each entity, there´s possibility to customize how to handle delete operations and ownership changes on Server.<br/>
+a) `Disable Sync Deletion` checkbox to use incremental synchronization for the entity<br/>
+![Screenshot](syncdeletion.png)
+b) `Enable Sync Deletion` checkbox to synchronize also deletions and ownership changes. This makes syncrhonization slower, particulary for large tables.
+In scenario, when backend type of Server organization is Dynamics, Resco CRM Sync offers `Advanced Sync Deletion`, which should solve this problem.
+
+## Advanced Sync Deletion
+It´s able to use it only if Server organization is Dynamics.<br/>
+This function use the `Plugins` that Resco designed for Dynamics to track records `deletions` and `owner changes`, to greatly improve synchronization times for large organizations.
+### How to setup Advanced Sync Deletion?
+a) Select what to track on the `Server` organization<br/>
+1. Log in to your source organization (Dynamics).
+2. Start Woodford and select `Plugins` from the Administration menu.
+3. Select what actions do you want to track:
+    - On the `N:N Relationships tab`, select which relations should be tracked.
+    - On the `Delete tab`, select entities for which deletions should be tracked.
+    - On the `Owner tab`, select entities for which ownership changes should be tracked.
+4. Click Save to save changes.
+
+b) Select what entities to sync<br/>
+1. Log in to either organization (Resco Cloud or Dynamics).
+2. Start Woodford and select Resco CRM sync from the Administration menu.
+3. Select the entities you want to synchronize.
+4. Clear Sync Deletion for these entities.
+5. Additionally, you need to enable synchronization for the entity `Mobile Tracking [resco_mobiletracking]`.
