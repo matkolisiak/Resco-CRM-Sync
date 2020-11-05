@@ -8,8 +8,7 @@ This document is a brief summary of actual status of Resco CRM Sync.
 3. Updating metadata
 4. Sync Data
 5. Sync of deletions
-6. Offline transactions
-7. Sync job
+6. Logs of Synchronization
 
 # 1. Getting started with Resco CRM Sync
 Resco CRM Sync is a tool that allows connecting two organizations. By creating a connection, you can synchronize data and metadata between them.<br/><br/>
@@ -70,10 +69,20 @@ b) through webservice - ConnectRequest<br/>
 *`Important note`: Server metadata changes are migrated to the client, not vice versa.*
 
 # 4. Sync Data
-## Sync Execute possibilities
-Synchronization of data can be executed:<br/>
-a) On demand - by clicking `Sync All` (Resco CRM Sync section, in Woodford)<br/>
-b) Periodically - by setting frequency of synchronization on the client. You can set it up in Admin Console->Processes. If the job (Sync Job) does not exist, you can create it. 
+## Entities selection
+Selecting of entities, which should be synchronized can be done:<br/>
+a) by enabling them in the list of entities in Resco CRM Sync section in Woodford <br/>
+![Screenshot](enableentities.png)<br/>
+b) through webservice in ConnectRequest as Entities parameter <br/>
+## Sync Filter
+There´s possibility to apply `Sync Filter` per entity:<br/>
+a) by clicking Sync Filter button, (Resco CRM Sync section). And setting conditions in the editor. <br/>
+![Screenshot](syncfilter.png)
+b) through webservice in ConnectRequest as SyncFiltersXml parameter <br/>
+
+## Ways of Sync data execution
+a) `Sync All` - On demand - by clicking Sync All (Resco CRM Sync section, in Woodford)<br/>
+b) `Sync Job` - Periodically - by setting frequency of synchronization on the client.<br/> You can set it up in Admin Console->Processes. If the job (Sync Job) does not exist, you can create it. 
 1. Click New
 2. Select Job category
 3. Enter descriptive name
@@ -84,18 +93,32 @@ b) Periodically - by setting frequency of synchronization on the client. You can
 8. Activate
 ![Screenshot](syncjob.png)
 
-c) Through webservice<br/>
+c) `Webservice`<br/>
+
 ```bash
 https://build.rescocrm.com/rest/v1/sync/mtestingdyn2connect/SyncAsync
 ```
 Please, for more information contact peter@resco.net or martin.liscinsky@resco.net<br/>
-## Entities selection
-Selecting of entities, which should be synchronized can be done:<br/>
-a) by enabling them in the list of entities in Resco CRM Sync section in Woodford <br/>
-![Screenshot](enableentities.png)
-b) through webservice in ConnectRequest as Entities parameter <br/>
-## Sync Filter
-There´s possibility to apply `Sync Filter` per entity:<br/>
-a) by clicking Sync Filter button, (Resco CRM Sync section). And setting conditions in editor. <br/>
-![Screenshot](syncfilter.png)
-b) through webservice in ConnectRequest as SyncFiltersXml parameter <br/>
+## Sync Data Execute from Server to Client
+Once, is Sync executed by one of the way of execution descibed above, data are sent from Server to Client.
+## Sync Data Execute from Client to Server
+It depends on CrmWritePlugin.config setting `<add key="WriteOffline" value="true"/>`.<br/>
+a) value = `"false"` <br/>
+- Updates of data are sent to Server immediately.<br/>
+
+b) value = `"true"` <br/>
+- Info about data changes are stored to `[migrate_transaction]` entity. 
+Once, is Sync executed by one of the way of execution descibed above, data are sent from Client to Server.<br/>
+- In addition, Resco CRM Sync offers `Offline transaction tab`, for managing data transactions (records of `[migrate_transaction]` entity) from Client to Server.
+
+## Offline Transactions tab
+It shows the individual transactions along with their Status:<br/>
+`All` - all transactions<br/>
+`Pending` - transactions waiting for upload<br/>
+`Processed` - transactions successfully delivered to Dynamics<br/>
+`Error` - transactions unsuccessfully delivered<br/>
+`Archived` - transactions manually marked as Archived<br/><br/>
+Use the toolbar buttons to change the status of transactions:<br/>
+`Set to Pending`: Schedule selected transactions for a new delivery.<br/>
+`Set to Archived`: Mark selected transactions as Archived. These changes will not be delivered to Dynamics.<br/>
+`Set all to Pending`: Schedule all failed transactions (with the status Error) for a new delivery.<br/>
