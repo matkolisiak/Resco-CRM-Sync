@@ -16,6 +16,50 @@ Resco CRM Sync is a tool that allows connecting two organizations. By creating a
 
 The position of the organization can be as:<br/>
 a) `Server`: The organization from which you create a client. Updates of metadata (on demand) and data (periodically) are sent to the client.<br/>
-b) `Client`: Updates of data are instantly or periodically sent to the server. Update of metadata can be pulled from server on demand.<br/>
+b) `Client`: Updates of data are instantly or periodically sent to the server. Updates of metadata can be pulled from server on demand.<br/>
 
 ![Screenshot](serverpositions.png)
+
+# 2. Creating a connection
+![Screenshot](connectpossibilities.png)
+## a) From Woodford
+1. Navigate to Woodford
+2. Resco CRM Sync section
+3. Connectior
+4. Fill in info about client organization
+5. Select backend type of server organization
+6. Fill in info about server organization
+7. Click on Connect button
+
+![Screenshot](woodfordconnect.png)
+## b) Externally - Webservice
+Please, for more information about connecting through webservice, contact peter@resco.net or martin.liscinsky@resco.net 
+```bash
+https://connect.rescocrm.com/rest/v1/sync/myclientorganization/ConnectAsync
+```
+```xml
+<ConnectRequest>     
+    <SyncSetup>         
+        <ProviderID>60650fb3-5d8b-45dd-b82e-459f3b019e9a</ProviderID>        
+        <Url>urlofserverorganization</Url>   
+        <UserName>martin.liscinsky@resco.net</UserName>       
+        <Password>xxx</Password>         
+        <RegistrationInfo>             
+            <Email>martin.liscinsky@resco.net</Email>             
+            <FirstName>Martin</FirstName>             
+            <LastName>Liscinsky</LastName>             
+            <Company>Resco</Company>         
+        </RegistrationInfo>    
+    </SyncSetup> 
+</ConnectRequest>
+```
+## c) Connect Page - !!! Need to allow on our production servers !!!
+https://connect.rescocrm.com/Register.aspx?otype=connect <br/>
+https://build.rescocrm.com/Register.aspx?otype=connect <br/>
+1. Navigate to one of the url above.
+2. Fill in info about new `client` organization.
+3. Select `backend type` of server organization.
+4. Fill in info about `server` organization.
+5. Click on Connect button.
+![Screenshot](connectpage.png)
+# 2. Updating metadata
