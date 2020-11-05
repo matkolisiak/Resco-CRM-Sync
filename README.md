@@ -26,9 +26,9 @@ b) `Client`: Updates of data are instantly or periodically sent to the server. U
 1. Navigate to Woodford
 2. Resco CRM Sync section
 3. Connectior
-4. Fill in info about client organization
-5. Select backend type of server organization
-6. Fill in info about server organization
+4. Fill in info about `client` organization
+5. Select `backend type` of server organization
+6. Fill in info about `server` organization
 7. Click on Connect button
 
 ![Screenshot](woodfordconnect.png)
@@ -62,4 +62,12 @@ https://build.rescocrm.com/Register.aspx?otype=connect <br/>
 4. Fill in info about `server` organization.
 5. Click on Connect button.
 ![Screenshot](connectpage.png)
-# 2. Updating metadata
+
+# 3. Updating metadata - !!!Rename to Update Client, not Update Server???!!!
+Synchronization of metadata can be executed on demand:<br/> 
+a) by clicking `Update Server` button, which is part of the Resco CRM Sync section in Woodford. <br/>
+b) through webservice - ConnectRequest<br/>
+*`Important note`: server metadata changes are migrated to the client´s, not vice versa.*
+
+# 4. Sync Data
+
