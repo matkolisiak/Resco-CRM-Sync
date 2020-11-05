@@ -67,7 +67,35 @@ https://build.rescocrm.com/Register.aspx?otype=connect <br/>
 Synchronization of metadata can be executed on demand:<br/> 
 a) by clicking `Update Server` button, which is part of the Resco CRM Sync section in Woodford. <br/>
 b) through webservice - ConnectRequest<br/>
-*`Important note`: server metadata changes are migrated to the client´s, not vice versa.*
+*`Important note`: Server metadata changes are migrated to the client, not vice versa.*
 
 # 4. Sync Data
+## Sync Execute possibilities
+Synchronization of data can be executed:<br/>
+a) On demand - by clicking `Sync All` (Resco CRM Sync section, in Woodford)<br/>
+b) Periodically - by setting frequency of synchronization on the client. You can set it up in Admin Console->Processes. If the job (Sync Job) does not exist, you can create it. 
+1. Click New
+2. Select Job category
+3. Enter descriptive name
+4. Configure frequency (e.g Periodically, every Hour)
+5. Insert a new step (click Step and select Function) and enter  the following Server SyncService
+6. Click Save
+7. Publish
+8. Activate
+![Screenshot](syncjob.png)
 
+c) Through webservice<br/>
+```bash
+https://build.rescocrm.com/rest/v1/sync/mtestingdyn2connect/SyncAsync
+```
+Please, for more information contact peter@resco.net or martin.liscinsky@resco.net<br/>
+## Entities selection
+Selecting of entities, which should be synchronized can be done:<br/>
+a) by enabling them in the list of entities in Resco CRM Sync section in Woodford <br/>
+![Screenshot](enableentities.png)
+b) through webservice in ConnectRequest as Entities parameter <br/>
+## Sync Filter
+There´s possibility to apply `Sync Filter` per entity:<br/>
+a) by clicking Sync Filter button, (Resco CRM Sync section). And setting conditions in editor. <br/>
+![Screenshot](syncfilter.png)
+b) through webservice in ConnectRequest as SyncFiltersXml parameter <br/>
