@@ -115,8 +115,7 @@ It shows the individual transactions along with their Status:<br/>
 `Pending` - transactions waiting for upload<br/>
 `Processed` - transactions successfully delivered to Dynamics<br/>
 `Error` - transactions unsuccessfully delivered<br/>
-    - In this case, transactions also contain `log-error message`, which could be analyzed. 
-
+    - In this case, transactions also contain `log-error message`, which could be analyzed.<br/> 
 `Archived` - transactions manually marked as Archived<br/><br/>
 Use the toolbar buttons to change the status of transactions:<br/>
 `Set to Pending`: Schedule selected transactions for a new delivery.<br/>
@@ -245,6 +244,5 @@ Please, for more information about Resco CRM Sync contact:<br/>
 a) Development: peter@resco.net , martin.liscinsky@resco.net<br/>
 b) Support: lukas@resco.net<br/>
 c) Product: malvina.melkovicova@resco.net
-
 
 
