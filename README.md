@@ -2,7 +2,7 @@
 
 This document is a brief summary of actual status of Resco CRM Sync.<br/>
 Todo list (topics to discussion):
-- TFS: Definition of Ready, Definition of Done, User Story, Tasks, connect existing bugs to User story
+- TFS: Definition of Ready, Definition of Done, User Story, Tasks, connect existing bugs to the User story
 - Connect - need to implement oAuth 2.0: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/11691
 - Solve problem with importing default project in special scenario: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/12355 
 - Enable Connect Page on production server
@@ -43,7 +43,6 @@ b) `Client`: Updates of data are instantly or periodically sent to the server. U
 
 ![Screenshot](woodfordconnect.png)
 ## b) Externally - Webservice
-Please, for more information about connecting through webservice, contact peter@resco.net or martin.liscinsky@resco.net 
 ```bash
 https://connect.rescocrm.com/rest/v1/sync/myclientorganization/ConnectAsync
 ```
@@ -98,7 +97,6 @@ c) `Webservice`<br/>
 ```bash
 https://build.rescocrm.com/rest/v1/sync/mtestingdyn2connect/SyncAsync
 ```
-Please, for more information contact peter@resco.net or martin.liscinsky@resco.net<br/>
 ## Sync Data Execute from Server to Client
 Once, is Sync executed by one of the way of execution descibed above, data are sent from Server to Client.
 ## Sync Data Execute from Client to Server
@@ -117,11 +115,14 @@ It shows the individual transactions along with their Status:<br/>
 `Pending` - transactions waiting for upload<br/>
 `Processed` - transactions successfully delivered to Dynamics<br/>
 `Error` - transactions unsuccessfully delivered<br/>
+    - In this case, transactions also contain `log-error message`, which could be analyzed. 
+
 `Archived` - transactions manually marked as Archived<br/><br/>
 Use the toolbar buttons to change the status of transactions:<br/>
 `Set to Pending`: Schedule selected transactions for a new delivery.<br/>
 `Set to Archived`: Mark selected transactions as Archived. These changes will not be delivered to Dynamics.<br/>
-`Set all to Pending`: Schedule all failed transactions (with the status Error) for a new delivery.<br/>
+`Set all to Pending`: Schedule all failed transactions (with the status Error) for a new delivery. <br/><br/>
+In the case of errors, transactions also contain `log-error message`, which could be analyzed. 
 
 ## Entities selection
 Selecting of entities, which should be synchronized can be done:<br/>
@@ -160,3 +161,89 @@ b) Select what entities to sync<br/>
 3. Select the entities you want to synchronize.
 4. Clear Sync Deletion for these entities.
 5. Additionally, you need to enable synchronization for the entity `Mobile Tracking [resco_mobiletracking]`.
+
+# 5. Logs
+Synchronizations between servers could bring some issues, therefore are logs from synchronization collected to `[migrate_log]` entity.
+
+# 6. Tests
+## Creating connection
+1. Different scenarios of creating connection between Dynamics and RescoCloud as:<br/>
+a) `New RC organization`<br/>
+b) `Existed – as Sales` <br/>
+c) Existed – created from another Dynamics organization (as a))<br/>
+d) Existed – created from another Dynamics organization (as b))<br/>
+!!! BUG: Connect to new trial organization on Dynamics need to implement oAuth 2.0
+<br/>
+![Screenshot](dynrc.png)<br/>
+2. Different scenarios of creating connection between two RescoCloud organizations:<br/>
+a) `RC1 as 1a) <-> new RC2`<br/>
+b) `RC1 as 1b) <-> new RC2`<br/>
+c) RC1 as 1c) <-> new RC2<br/>
+d) RC1 as 1d) <-> new RC2<br/><br/>
+e) `RC1 as 1a) <-> RC2 - Existed – as Sales`<br/>
+f) `RC1 as 1b) <-> RC2 - Existed – as Sales`<br/>
+g) RC1 as 1c) <-> RC2 - Existed – as Sales<br/>
+h) RC1 as 1d) <-> RC2 - Existed – as Sales<br/><br/>
+i) RC1 as 1a) <-> RC2 - Existed – created from another RC1 (as 1a))<br/>
+j) RC1 as 1b) <-> Existed – created from another RC1 (as 1b))<br/>
+k) RC1 as 1c) <-> Existed – created from another RC1 (as 1c))<br/>
+l) RC1 as 1d) <-> Existed – created from another RC1 (as 1d))<br/>
+![Screenshot](rcrc.png)<br/>
+
+## Updating metadata
+1. Create: Add new custom Entity do Dynamics
+2. Update: Add new attribute to entity which exist
+3. Update: Change something in entity/entity.attribute, which exist
+4. Update: Remove some entity.attribute, which exist 
+5. Remove: Remove some entity
+6. Localizations: Change localizations of some entities.
+
+It is necessary to make `metadata|localizations` changes to the `Server` organization.<br/>
+???Client precreated - will it work fine???
+
+## Sync Data
+1. Create/Update new records on Server
+2. Create/Update new records on Client
+3. Sync All
+4. Check both organizations if records were created/updated
+5. Apply some `Sync Filters` and `repeat steps 1-4`
+
+It is necessary to `repeat steps 1-5` for:<br/>
+a) `Standard entities`: [account], [contact], [lead]<br/>
+b) `N:N (intersect)`: [accountlead]<br/>
+c) `Activities`: [appointment]<br/>
+d) `Special`: [systemuser], [roleprivileges], [systemuser_role], [role]<br/>
+e) `Custom`<br/>
+
+!!! Entities which throw an exception if you try sync them (Should we hide them from the list)???<br/>
+`[calendarrule]` –<br/> 
+`[commitment]` - <br/>
+`[plugintype]` - <br/>
+`[resco_questionnairefolder]` - <br/>
+...!!!TODO: find others
+
+## Sync Deletion
+1. Delete records on Server
+2. Enable Sync Deletion for the entities to sync
+3. Sync All
+4. Check Client organization if records were deleted
+5. Apply some `Sync Filters` and `repeat steps 1-4`
+ 
+
+It is necessary to `repeat steps 1-5` for:<br/>
+a) `Standard entities`: [account], [contact], [lead]<br/>
+b) `N:N (intersect)`: [accountlead]<br/>
+c) `Activities`: [appointment]<br/>
+d) `Special`: [systemuser], [systemuser_role], [role]<br/>
+e) `Custom`<br/>
+
+## Advanced Sync Deletion
+Follow steps from:  `How to setup Advanced Sync Deletion?`<br/><br/>
+Please, for more information about Resco CRM Sync contact:<br/> 
+a) Development: peter@resco.net , martin.liscinsky@resco.net<br/>
+b) Support: lukas@resco.net<br/>
+c) Product: malvina.melkovicova@resco.net
+
+---
+Created by martin.liscinsky@resco.net
+
