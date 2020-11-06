@@ -240,9 +240,3 @@ e) `Custom`<br/>
 Follow steps from:  `How to setup Advanced Sync Deletion?`<br/><br/>
 
 ---
-Please, for more information about Resco CRM Sync contact:<br/> 
-a) Development: peter@resco.net , martin.liscinsky@resco.net<br/>
-b) Support: lukas@resco.net<br/>
-c) Product: malvina.melkovicova@resco.net
-
-
