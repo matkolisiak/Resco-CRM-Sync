@@ -174,7 +174,6 @@ c) Existed – created from another Dynamics organization (as a))<br/>
 d) Existed – created from another Dynamics organization (as b))<br/>
 !!! BUG: Connect to new trial organization on Dynamics need to implement oAuth 2.0
 <br/>
-
 ![Screenshot](dynrc.png)
 
 2. Different scenarios of creating connection between two RescoCloud organizations:<br/>
@@ -190,7 +189,6 @@ i) RC1 as 1a) <-> RC2 - Existed – created from another RC1 (as 1a))<br/>
 j) RC1 as 1b) <-> Existed – created from another RC1 (as 1b))<br/>
 k) RC1 as 1c) <-> Existed – created from another RC1 (as 1c))<br/>
 l) RC1 as 1d) <-> Existed – created from another RC1 (as 1d))<br/>
-
 ![Screenshot](rcrc.png)
 
 ## Updating metadata
@@ -242,11 +240,12 @@ e) `Custom`<br/>
 
 ## Advanced Sync Deletion
 Follow steps from:  `How to setup Advanced Sync Deletion?`<br/><br/>
+
+---
 Please, for more information about Resco CRM Sync contact:<br/> 
 a) Development: peter@resco.net , martin.liscinsky@resco.net<br/>
 b) Support: lukas@resco.net<br/>
 c) Product: malvina.melkovicova@resco.net
 
----
-Created by martin.liscinsky@resco.net
+
 
