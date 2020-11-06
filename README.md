@@ -172,8 +172,7 @@ a) `New RC organization`<br/>
 b) `Existed – as Sales` <br/>
 c) Existed – created from another Dynamics organization (as a))<br/>
 d) Existed – created from another Dynamics organization (as b))<br/>
-!!! BUG: Connect to new trial organization on Dynamics need to implement oAuth 2.0
-<br/>
+!!! BUG: Connect to new trial organization on Dynamics need to implement oAuth 2.0 <br/>
 ![Screenshot](dynrc.png)
 
 2. Different scenarios of creating connection between two RescoCloud organizations:<br/>
