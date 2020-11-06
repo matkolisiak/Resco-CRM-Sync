@@ -13,8 +13,7 @@ Todo list (topics to discussion):
 
 Already found BUGS:
 - Connect - need to implement oAuth 2.0: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/11691
-- Connect throws an exception - default project: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/12355 
-
+- Connect throws an exception - default project: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/12355
 # Content:
 1. Getting started with Resco CRM Sync
 2. Creating a connection
