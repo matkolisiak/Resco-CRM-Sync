@@ -3,15 +3,17 @@
 This document is a brief summary of actual status of Resco CRM Sync.<br/>
 Todo list (topics to discussion):
 - TFS: Definition of Ready, Definition of Done, User Story, Tasks, connect existing bugs to the User story
-- Connect - need to implement oAuth 2.0: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/11691
-- Solve problem with importing default project in special scenario: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/12355 
+
 - Enable Connect Page on production server
 - What should be tested
 - Develope Automated tests
 - Rename Update Server to Update Client Metadata?
 - Define better examples of webrequests to this document?
-- Plan to the future
+- Plan to the future<br/>
 
+Already found BUGS:
+- Connect - need to implement oAuth 2.0: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/11691
+- Connect throws an exception - default project: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/12355 
 
 # Content:
 1. Getting started with Resco CRM Sync
@@ -166,11 +168,11 @@ Synchronizations between servers could bring some issues, therefore are logs fro
 
 # 6. Tests
 ## Creating connection
-1. Different scenarios of creating connection between Dynamics and RescoCloud as:<br/>
-a) `New RC organization`<br/>
-b) `Existed – as Sales` <br/>
-c) Existed – created from another Dynamics organization (as a))<br/>
-d) Existed – created from another Dynamics organization (as b))<br/>
+1. Different scenarios of creating connection between Dynamics and RescoCloud:<br/>
+a) `Dynamics <-> New RC1 organization`<br/>
+b) `Dynamics <-> Existed – as Sales` <br/>
+c) Dynamics <-> Existed – created from another Dynamics organization (as a))<br/>
+d) Dynamics <-> Existed – created from another Dynamics organization (as b))<br/>
 !!! BUG: Connect to new trial organization on Dynamics need to implement oAuth 2.0 <br/>
 ![Screenshot](dynrc.png)
 
