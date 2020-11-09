@@ -5,7 +5,7 @@ Todo list (topics to discussion):
 - TFS: Definition of Ready, Definition of Done, User Story, Tasks, connect existing bugs to the User story
 
 - Enable Connect Page on production server
-- What should be tested
+- Which scenarios should be tested/accepted
 - Develope Automated tests
 - Rename Update Server to Update Client Metadata?
 - Define better examples of webrequests to this document?
@@ -13,7 +13,14 @@ Todo list (topics to discussion):
 
 Already found BUGS:
 - Connect - need to implement oAuth 2.0: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/11691
-- Connect throws an exception - default project: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/12355
+- Sync Deletion of N:N throws an exception - all scenarios
+- Sync filters are not allways respected - need to investigate why
+- Sometimes this error occurs:
+```xml
+<soap> SqlException: Transaction (Process ID 67) was deadlocked on lock resources with another process and has been chosen as the deadlock victim. Rerun the transaction. </soap>
+```
+- Connect throws an exception (special scenario) - default project: https://dev.azure.com/resconet/MobileCRM/_workitems/edit/12355
+
 # Content:
 1. Getting started with Resco CRM Sync
 2. Creating a connection
@@ -177,17 +184,17 @@ d) Dynamics <-> Existed – created from another Dynamics organization (as b))<b
 
 2. Different scenarios of creating connection between two RescoCloud organizations:<br/>
 a) `RC1 as 1a) <-> new RC2`<br/>
-b) `RC1 as 1b) <-> new RC2`<br/>
+b) RC1 as 1b) <-> new RC2<br/>
 c) RC1 as 1c) <-> new RC2<br/>
 d) RC1 as 1d) <-> new RC2<br/><br/>
-e) `RC1 as 1a) <-> RC2 - Existed – as Sales`<br/>
-f) `RC1 as 1b) <-> RC2 - Existed – as Sales`<br/>
+e) RC1 as 1a) <-> RC2 - Existed – as Sales<br/>
+f) RC1 as 1b) <-> RC2 - Existed – as Sales<br/>
 g) RC1 as 1c) <-> RC2 - Existed – as Sales<br/>
 h) RC1 as 1d) <-> RC2 - Existed – as Sales<br/><br/>
-i) RC1 as 1a) <-> RC2 - Existed – created from another RC1 (as 1a))<br/>
-j) RC1 as 1b) <-> Existed – created from another RC1 (as 1b))<br/>
-k) RC1 as 1c) <-> Existed – created from another RC1 (as 1c))<br/>
-l) RC1 as 1d) <-> Existed – created from another RC1 (as 1d))<br/>
+i) `RC1 as 1a) <-> RC2 -Existed – (as 1a)`<br/>
+j) RC1 as 1b) <-> RC2 -Existed – (as 1b)<br/>
+k) RC1 as 1c) <-> RC2 -Existed – (as 1c)<br/>
+l) RC1 as 1d) <-> RC2 -Existed – (as 1d)<br/>
 ![Screenshot](rcrc.png)
 
 ## Updating metadata
@@ -199,7 +206,6 @@ l) RC1 as 1d) <-> Existed – created from another RC1 (as 1d))<br/>
 6. Localizations: Change localizations of some entities.
 
 It is necessary to make `metadata|localizations` changes to the `Server` organization.<br/>
-???Client precreated - will it work fine???
 
 ## Sync Data
 1. Create/Update new records on Server
@@ -209,8 +215,8 @@ It is necessary to make `metadata|localizations` changes to the `Server` organiz
 5. Apply some `Sync Filters` and `repeat steps 1-4`
 
 It is necessary to `repeat steps 1-5` for:<br/>
-a) `Standard entities`: [account], [contact], [lead]<br/>
-b) `N:N (intersect)`: [accountlead]<br/>
+a) `Standard entities`: [account], [lead], [competitor]<br/>
+b) `N:N (intersect)`: [leadcompetitor]<br/>
 c) `Activities`: [appointment]<br/>
 d) `Special`: [systemuser], [roleprivileges], [systemuser_role], [role]<br/>
 e) `Custom`<br/>
@@ -220,7 +226,7 @@ e) `Custom`<br/>
 `[commitment]` - <br/>
 `[plugintype]` - <br/>
 `[resco_questionnairefolder]` - <br/>
-...!!!TODO: find others
+...!!!TODO: investigate if they still throw an exception
 
 ## Sync Deletion
 1. Delete records on Server
@@ -231,8 +237,8 @@ e) `Custom`<br/>
  
 
 It is necessary to `repeat steps 1-5` for:<br/>
-a) `Standard entities`: [account], [contact], [lead]<br/>
-b) `N:N (intersect)`: [accountlead]<br/>
+a) `Standard entities`: [account], [lead], [competitor]<br/>
+b) `N:N (intersect)`: [leadcompetitor]<br/>
 c) `Activities`: [appointment]<br/>
 d) `Special`: [systemuser], [systemuser_role], [role]<br/>
 e) `Custom`<br/>
